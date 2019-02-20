@@ -42,7 +42,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
             cartWrapper.appendChild(item);
             if (empty) {
-                empty.remove();
+                // empty.remove();
+                empty.style.display = 'none';
             }
 
             calcTotal();
@@ -91,15 +92,22 @@ window.addEventListener('DOMContentLoaded', () => {
             total += +item.textContent;
         });
         totalCost.textContent = total;
+
+        return total;
     }
 
     function removeFromCart() {
         const removeBtn = cartWrapper.querySelectorAll('.goods__item-remove');
+        let empty = cartWrapper.querySelector('.empty');
         removeBtn.forEach(function(btn) {
             btn.addEventListener('click', () => {
                 btn.parentElement.remove();
                 calcGoods(0);
                 calcTotal();
+
+                if (calcTotal() === 0) {
+                    empty.style.display = 'block';
+                }
             });
         });
     }
